@@ -1,0 +1,20 @@
+.week-navigation {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.week-navigation button {
+  padding: 5px 10px;
+  border: none;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.week-navigation span {
+  font-size: 16px;
+  font-weight: normal;
+}

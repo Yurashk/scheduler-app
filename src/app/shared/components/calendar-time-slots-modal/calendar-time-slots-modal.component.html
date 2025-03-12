@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Create Event</h2>
+<div mat-dialog-content>
+  <p>{{ data.day }}, {{ data.time }}</p>
+
+  <form [formGroup]="eventForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Event Title</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="eventForm.get('title')?.invalid">Title is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="eventForm.get('description')?.invalid">Description is required</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-button (click)="save()" color="primary" [disabled]="eventForm.invalid">Create</button>
+</div>

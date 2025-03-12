@@ -1,0 +1,65 @@
+<app-week-controller></app-week-controller>
+<div class="schedule-container">
+  <div class="schedule-header">
+    <div class="time-column-header">Time</div>
+    <div
+      *ngFor="let day of days; let dayIndex = index; trackBy: trackByIndex"
+      class="schedule-header-item"
+    >
+      {{ day.name }} {{ day.date }}
+    </div>
+  </div>
+  <div class="schedule-body">
+    <div class="time-column">
+      <div
+        *ngFor="
+          let time of timeSlots;
+          let timeIndex = index;
+          trackBy: trackByIndex
+        "
+        class="time-slot"
+      >
+        {{ time }}
+      </div>
+    </div>
+    <div
+      *ngFor="let day of days; let dayIndex = index; trackBy: trackByIndex"
+      class="schedule-column"
+    >
+      <div
+        *ngFor="
+          let task of day.tasks;
+          let timeIndex = index;
+          trackBy: trackByIndex
+        "
+        class="schedule-slot"
+        (click)="openEventDialog(dayIndex, timeIndex)"
+        cdkDropList
+        [id]="'dropList-' + dayIndex + '-' + timeIndex"
+        [cdkDropListData]="day.tasks[timeIndex] || []"
+        (cdkDropListDropped)="drop($event, dayIndex, timeIndex)"
+        (cdkDropListEntered)="onDragEnter(dayIndex, timeIndex)"
+        (cdkDropListExited)="onDragExit(dayIndex, timeIndex)"
+        [cdkDropListConnectedTo]="connectedDropLists"
+        [ngClass]="{
+          'drop-target':
+            activeDropTarget?.dayIndex === dayIndex &&
+            activeDropTarget?.timeIndex === timeIndex,
+        }"
+      >
+        <div
+          *ngIf="(day.tasks?.[timeIndex] ?? []).length > 0"
+          class="task"
+          [ngClass]="{
+            'task-empty': !day.tasks[timeIndex][0].title,
+            'task-filled': day.tasks[timeIndex][0].title,
+          }"
+          cdkDrag
+        >
+          <span>{{ day.tasks[timeIndex][0].title }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
