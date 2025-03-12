@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-calendar-time-slots-modal',
-  imports: [CommonModule, FormsModule, MatButtonModule,MatFormFieldModule,MatInputModule,MatDialogModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, MatButtonModule,MatFormFieldModule,MatInputModule,MatDialogModule,ReactiveFormsModule,MatIconModule],
   templateUrl: './calendar-time-slots-modal.component.html',
   styleUrl: './calendar-time-slots-modal.component.scss'
 })
@@ -30,7 +31,9 @@ export class CalendarTimeSlotsModalComponent {
     if (this.eventForm.invalid) return;
     this.dialogRef.close(this.eventForm.value);
   }
-
+  deleteTask() {
+    this.dialogRef.close({ delete: true });
+  }
   close() {
     this.dialogRef.close();
   }

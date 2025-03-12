@@ -5,19 +5,39 @@
   <form [formGroup]="eventForm">
     <mat-form-field appearance="fill">
       <mat-label>Event Title</mat-label>
-      <input matInput formControlName="title">
-      <mat-error *ngIf="eventForm.get('title')?.invalid">Title is required</mat-error>
+      <input matInput formControlName="title" />
+      <mat-error *ngIf="eventForm.get('title')?.invalid"
+        >Title is required</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description"></textarea>
-      <mat-error *ngIf="eventForm.get('description')?.invalid">Description is required</mat-error>
+      <mat-error *ngIf="eventForm.get('description')?.invalid"
+        >Description is required</mat-error
+      >
     </mat-form-field>
   </form>
 </div>
 
-<div mat-dialog-actions>
+<div mat-dialog-actions class="button-holder">
   <button mat-button (click)="close()">Cancel</button>
-  <button mat-button (click)="save()" color="primary" [disabled]="eventForm.invalid">Create</button>
+  <button
+    mat-mini-fab
+    color="accent"
+    aria-label="Example icon button with a delete icon"
+    [disabled]="!data.task?.title"
+    (click)="deleteTask()"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button
+    mat-button
+    (click)="save()"
+    color="primary"
+    [disabled]="eventForm.invalid"
+  >
+    Create
+  </button>
 </div>

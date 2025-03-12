@@ -86,7 +86,6 @@ export class CalendarComponent implements OnInit {
       ),
     }));
   }
-
   openEventDialog(dayIndex: number, timeIndex: number) {
     const existingTask = this.days[dayIndex].tasks[timeIndex]?.[0];
     const dialogRef = this.dialog.open(CalendarTimeSlotsModalComponent, {
@@ -94,19 +93,24 @@ export class CalendarComponent implements OnInit {
       data: {
         day: this.days[dayIndex].name,
         time: this.timeSlots[timeIndex],
-        task: existingTask
-          ? { ...existingTask }
-          : { title: '', description: '' },
+        task: existingTask ? { ...existingTask } : { title: '', description: '' },
       },
     });
-
+  
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+      if (result?.delete) {
+        this.days[dayIndex].tasks[timeIndex] = [];
+        this.saveCurrentWeek();
+        this._snackBar.openFromComponent(InformationSnackBarComponent, {
+          duration: 2000,
+          data: { message: `Task deleted!` }
+        });
+      } else if (result) {
         this.days[dayIndex].tasks[timeIndex] = [result];
         this.saveCurrentWeek();
         this._snackBar.openFromComponent(InformationSnackBarComponent, {
           duration: 2000,
-          data: { message: `Task "${result.title}" Created!` }
+          data: { message: `Task "${result.title}" updated!` }
         });
       }
     });
